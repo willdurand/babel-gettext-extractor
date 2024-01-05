@@ -21,7 +21,7 @@ var DEFAULT_HEADERS = {
   'plural-forms': 'nplurals = 2; plural = (n !== 1);',
 };
 
-var EXTRACTED_COMMENT_REGEXP = new RegExp(/^\s*L10n:\s*(.*?)\s*$/, 'im');
+var EXTRACTED_COMMENT_REGEXP = /^\s*L10n:\s*(.*?)\s*$/im;
 
 function getExtractedComment(node) {
   var comments = [];
