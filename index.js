@@ -52,6 +52,22 @@ module.exports = function() {
 
   return { visitor: {
 
+    ExpressionStatement(nodePath) {
+      var extractedComment = getExtractedComment(nodePath.node);
+      if (!extractedComment) {
+        return;
+      }
+      var right = nodePath.node.expression.right;
+      if (!right) {
+        return;
+      }
+      var comment = getExtractedComment(right);
+      if (!comment) {
+        var key = right.start + '|' + right.end;
+        relocatedComments[key] = extractedComment;
+      }
+    },
+
     VariableDeclaration(nodePath) {
       var extractedComment = getExtractedComment(nodePath.node);
       if (!extractedComment) {

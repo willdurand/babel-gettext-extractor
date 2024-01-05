@@ -84,6 +84,27 @@ describe('babel-gettext-extractor', function() {
       assert(content.match(/#. whatever happens/));
     });
 
+    it('Should extract comments in assignment expression', function() {
+      var result = babel.transform(`
+      let aVariable;
+      switch (cond) {
+        default:
+          // L10n: whatever happens
+          aVariable = _t("l10n string");
+      }`, {
+        plugins: [
+          [plugin, {
+            functionNames: {
+              _t: ['msgid'],
+            },
+            fileName: './test/comments.po',
+          }],
+        ],
+      });
+      assert(!!result);
+      var content = fs.readFileSync('./test/comments.po') + '';
+      assert(content.match(/#. whatever happens/));
+    });
     it('Should return a result when expression is used as an argument', function() {
       var result = babel.transform("let t = _t('some' + ' expression');", {
         plugins: [

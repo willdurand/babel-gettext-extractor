@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.1.0
+
+- Extract comments in expression statements too
+
 ## 5.0.0
 
 - **Breaking Change:** Generate PO entries with _extracted_ comments instead of _translator_ comments since Pontoon ignores non-extracted comments. The new prefix is "L10n:".
