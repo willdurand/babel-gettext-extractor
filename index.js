@@ -21,11 +21,12 @@ var DEFAULT_HEADERS = {
   'plural-forms': 'nplurals = 2; plural = (n !== 1);',
 };
 
+var EXTRACTED_COMMENT_REGEXP = new RegExp(/^\s*L10n:\s*(.*?)\s*$/, 'im');
 
-function getTranslatorComment(node) {
+function getExtractedComment(node) {
   var comments = [];
   (node.leadingComments || []).forEach(function(commentNode) {
-    var match = commentNode.value.match(/^\s*translators:\s*(.*?)\s*$/im);
+    var match = commentNode.value.match(EXTRACTED_COMMENT_REGEXP);
     if (match) {
       comments.push(match[1]);
     }
@@ -52,15 +53,15 @@ module.exports = function() {
   return { visitor: {
 
     VariableDeclaration(nodePath) {
-      var translatorComment = getTranslatorComment(nodePath.node);
-      if (!translatorComment) {
+      var extractedComment = getExtractedComment(nodePath.node);
+      if (!extractedComment) {
         return;
       }
       nodePath.node.declarations.forEach(function(declarator) {
-        var comment = getTranslatorComment(declarator);
+        var comment = getExtractedComment(declarator);
         if (!comment) {
           var key = declarator.init.start + '|' + declarator.init.end;
-          relocatedComments[key] = translatorComment;
+          relocatedComments[key] = extractedComment;
         }
       });
     },
@@ -140,17 +141,17 @@ module.exports = function() {
           reference: fn + ':' + nodePath.node.loc.start.line,
         };
 
-        var translatorComment = getTranslatorComment(nodePath.node);
-        if (!translatorComment) {
-          translatorComment = getTranslatorComment(nodePath.parentPath);
-          if (!translatorComment) {
-            translatorComment = relocatedComments[
+        var extractedComment = getExtractedComment(nodePath.node);
+        if (!extractedComment) {
+          extractedComment = getExtractedComment(nodePath.parentPath);
+          if (!extractedComment) {
+            extractedComment = relocatedComments[
               nodePath.node.start + '|' + nodePath.node.end];
           }
         }
 
-        if (translatorComment) {
-          translate.comments.translator = translatorComment;
+        if (extractedComment) {
+          translate.comments.extracted = extractedComment;
         }
 
         var context = defaultContext;

@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- None
+- **Breaking Change:** Generate PO entries with _extracted_ comments instead of _translator_ comments since Pontoon ignores non-extracted comments. The new prefix is "L10n:".
 
 ## 4.1.2
 - feat: Update `gettext-parser` to 1.4.0 (#19)

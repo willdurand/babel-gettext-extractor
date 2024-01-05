@@ -69,7 +69,7 @@ describe('babel-gettext-extractor', function() {
     });
 
     it('Should extract comments', function() {
-      var result = babel.transform('// Translators: whatever happens\n let t = _t("code");', {
+      var result = babel.transform('// L10n: whatever happens\n let t = _t("code");', {
         plugins: [
           [plugin, {
             functionNames: {
@@ -81,7 +81,7 @@ describe('babel-gettext-extractor', function() {
       });
       assert(!!result);
       var content = fs.readFileSync('./test/comments.po') + '';
-      assert(content.match(/whatever happens/));
+      assert(content.match(/#. whatever happens/));
     });
 
     it('Should return a result when expression is used as an argument', function() {
