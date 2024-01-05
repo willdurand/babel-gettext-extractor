@@ -1,7 +1,6 @@
-[![Build Status](https://travis-ci.com/getsentry/babel-gettext-extractor.svg?branch=master)](https://travis-ci.org/getsentry/babel-gettext-extractor)
-[![npm version](https://img.shields.io/npm/v/babel-gettext-extractor.svg)](https://www.npmjs.com/package/babel-gettext-extractor)
-
 # babel-gettext-extractor
+
+:warning: This is a maintained fork for [addons-frontend][] only.
 
 Extract gettext string with babel support syntax JSX, ES6, ... It is based on
 node-gettext.  This is a fork of the npm module `babel-gettext-plugin` which
@@ -111,3 +110,5 @@ License
 =======
 
 [MIT License](LICENSE).
+
+[addons-frontend]: https://github.com/mozilla/addons-frontend
