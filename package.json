@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha",
     "lint": "eslint *.js **/*.js",
-    "test-ci": "npm run clean && npm run test && npm run lint",
+    "test-ci": "npm run clean && nyc --reporter=text-summary --reporter=lcov npm run test && npm run lint",
     "clean": "rimraf 'test/*.po'"
   },
   "repository": {
@@ -37,6 +37,7 @@
     "eslint-plugin-jsx-a11y": "4.0.0",
     "eslint-plugin-react": "6.10.0",
     "mocha": "^2.3.4",
+    "nyc": "^15.1.0",
     "rimraf": "^2.6.1"
   }
 }
